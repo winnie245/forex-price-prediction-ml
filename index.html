@@ -1,1 +1,65 @@
+<html>
+<head>
+<title>Predict Forex Prices</title>
+ <style>
+	body {
+		background-image: url("/static/images/PHONE.jpg");
+		background-size: cover;
+		background-position: center;
+		height: 100%;
+		margin: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	h1{
+		color:bisque;
+		text-align:left;
+		font-size: 45px;
+	}
+	
 
+	.container {
+				position: relative;
+				text-align: center;
+	}
+	button {
+			padding: 10px 10px;
+			background-color: lightblue;
+			color: black;
+			font-size: 15px;
+			border: none;
+			cursor: pointer;
+			right: 50%;
+			orientation: centre;
+			
+	}
+	
+	.logo {
+				position: fixed;
+				top: 0;
+				left: 0;
+				margin: 20px;
+			}
+	.prediction {
+				color: white;
+				font-weight: bold;
+				font-family: Arial, sans-serif;
+	}
+ </style>
+</head>
+<body>
+	<div> 
+	   <h1><b>Forex Price Prediction(KES/USD)</b></h1>
+	    <img class="logo" src="/static/images/logo.png"  alt="Logo">
+		<form action="{{url_for('getprediction')}}"method="post">
+			<label for="Date">Enter the Date:</label>
+			<input type="text" name="Date" placeholder="Date" required="required"/>
+			<button type="Submit" >get prediction</button>
+
+		</form>
+		<h2>Prediction Result:</h2>
+		<p class="prediction">{{ output }}</p>
+	</div>
+</body>
+</html>
