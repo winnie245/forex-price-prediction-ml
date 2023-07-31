@@ -1,0 +1,61 @@
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+import pickle
+
+#get and show data
+#store the data
+
+df = pd.read_csv('KESUSD=X.csv')
+
+#show the data
+
+df
+
+#creating a variable for predicting 'n' days out into the future,looking 30 days out into the future
+projection = 30
+#create a new column called prediction
+df['Prediction'] = df[['Close']].shift(- projection)
+#show the dataset
+df
+
+rom os import X_OK
+#create the independent dataset (x)
+x = np.array(df[['Close']])
+#remove the last 30 days
+x = x[:-projection]
+print(x)
+
+#create the dependent dataset (y)
+y = df['Prediction'].values
+y = y[:-projection]
+print(y)
+
+
+#split the datasets into 85% training and 15% testing datasets
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = .15)
+
+#create and train the model
+linReg = LinearRegression()
+#Train the model
+linReg.fit(x_train, y_train)
+
+#Testing the model using score
+linReg_confidence = linReg.score(x_test, y_test)
+print('Linear Regression Confidence:',linReg_confidence)
+
+#creating a variable called x_projection and set it to be equal to the last 30 raws of data from the oriinal price
+x_projection = np.array(df[['Close']])[-projection:]
+print(x_projection)
+
+#print linear regression model's predictions for the next 30 days
+linReg_prediction = linReg.predict(x_projection)
+print(linReg_prediction)
+
+filename= 'forex_pred_model'
+pickle.dump(linReg,open(filename,'wb'))
+
+loaded_linReg = pickle.load(open(filename,'rb'))
+loaded_linReg.predict(x_projection)
